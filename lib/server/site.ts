@@ -12,13 +12,14 @@ interface PublicSite {
   name: string;
   email: string;
   phone: string;
-  signup: { open: boolean; monthlyAmount: number };
+  /** trialDays: free days before the first card charge for new sign-ups (0 = none) */
+  signup: { open: boolean; monthlyAmount: number; trialDays: number };
   comingSoon: boolean;
   waitlistForm: boolean;
   indexable: boolean;
 }
 
-const FALLBACK: PublicSite = { name: "LankaStay", email: "", phone: "", signup: { open: false, monthlyAmount: 0 }, comingSoon: false, waitlistForm: false, indexable: false };
+const FALLBACK: PublicSite = { name: "LankaStay", email: "", phone: "", signup: { open: false, monthlyAmount: 0, trialDays: 0 }, comingSoon: false, waitlistForm: false, indexable: false };
 
 /** The cookie the preview link sets (see app/preview/route.ts). */
 export const PREVIEW_COOKIE = "site_preview";
@@ -36,7 +37,8 @@ async function fetchSite(): Promise<PublicSite | null> {
       signal: AbortSignal.timeout(5000),
     });
     const json = (await response.json()) as { ok?: boolean; site?: PublicSite };
-    if (response.ok && json.ok && json.site) return json.site;
+    // An older app sends no trialDays: no trial.
+    if (response.ok && json.ok && json.site) return { ...json.site, signup: { ...json.site.signup, trialDays: Number(json.site.signup?.trialDays) || 0 } };
     console.error("[site] the app answered", response.status, "from", APP_URL);
   } catch (error) {
     console.error("[site] could not read the settings from", APP_URL, error);
@@ -61,6 +63,9 @@ export async function loadSite() {
 }
 
 export type Site = Awaited<ReturnType<typeof loadSite>>;
+
+/** The free trial a new owner gets if they register now, in days (0 = none, or sign-ups are closed). */
+export const trialDays = (site: { signup: { open: boolean; trialDays: number } }) => (site.signup.open ? site.signup.trialDays : 0);
 
 /** A phone number as a wa.me link, or null. Local Sri Lankan numbers (07…) get 94. */
 export function whatsappLink(phone: string) {

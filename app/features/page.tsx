@@ -5,7 +5,7 @@ import { FaqList } from "@/components/site/faq";
 import { JsonLd } from "@/components/site/json-ld";
 import { SitePage } from "@/components/site/site-page";
 import { breadcrumbs, faqPage, pageMeta, softwareApp, webPage } from "@/lib/server/seo";
-import { loadSite } from "@/lib/server/site";
+import { loadSite, trialDays } from "@/lib/server/site";
 import { money } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -226,7 +226,13 @@ export default async function FeaturesPage() {
 
       <CtaBand
         title="Ready for the next booking?"
-        text={site.signup.open ? "Register in two minutes. Your villa opens as soon as the first month is paid." : "Sign in to your villa, or get in touch to hear when sign-ups open."}
+        text={
+          site.signup.open
+            ? trialDays(site) > 0
+              ? `Register in two minutes and try everything free for ${trialDays(site)} days.`
+              : "Register in two minutes. Your villa opens as soon as the first month is paid."
+            : "Sign in to your villa, or get in touch to hear when sign-ups open."
+        }
         primary={primary}
         secondary={{ href: "/contact", label: "Talk to us" }}
       />

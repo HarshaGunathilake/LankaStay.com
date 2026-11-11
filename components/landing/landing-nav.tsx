@@ -8,9 +8,13 @@ import { BrandMark, Wordmark } from "@/components/brand";
 import { appLink } from "@/lib/links";
 import { cn } from "@/lib/utils";
 
+/** On a page or one of its sub-pages (every guide counts as Docs). */
+const isOn = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
 const LINKS = [
   { href: "/features", label: "Features" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/docs", label: "Docs" },
   { href: "/about", label: "About us" },
   { href: "/contact", label: "Contact us" },
 ];
@@ -54,10 +58,10 @@ export function LandingNav({ platform, signedIn, signupsOpen }: { platform: stri
             <li key={l.href}>
               <Link
                 href={l.href}
-                aria-current={pathname === l.href ? "page" : undefined}
+                aria-current={isOn(pathname, l.href) ? "page" : undefined}
                 className={cn(
                   "inline-flex min-h-11 items-center px-3 text-[0.9375rem] transition-colors duration-200 hover:text-lp-ink",
-                  pathname === l.href ? "font-semibold text-lp-ink shadow-[inset_0_-2px_0_var(--color-lp-accent)]" : "text-lp-muted",
+                  isOn(pathname, l.href) ? "font-semibold text-lp-ink shadow-[inset_0_-2px_0_var(--color-lp-accent)]" : "text-lp-muted",
                 )}
               >
                 {l.label}
@@ -90,8 +94,8 @@ export function LandingNav({ platform, signedIn, signupsOpen }: { platform: stri
                 <Link
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  aria-current={pathname === l.href ? "page" : undefined}
-                  className={cn("flex min-h-12 items-center text-lg font-medium", pathname === l.href && "text-lp-accent")}
+                  aria-current={isOn(pathname, l.href) ? "page" : undefined}
+                  className={cn("flex min-h-12 items-center text-lg font-medium", isOn(pathname, l.href) && "text-lp-accent")}
                 >
                   {l.label}
                 </Link>

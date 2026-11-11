@@ -6,7 +6,7 @@ import { SitePage } from "@/components/site/site-page";
 import { LEGAL } from "@/lib/legal";
 import { appLink } from "@/lib/links";
 import { breadcrumbs, pageMeta, webPage } from "@/lib/server/seo";
-import { loadSite } from "@/lib/server/site";
+import { loadSite, trialDays } from "@/lib/server/site";
 import { money } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -27,6 +27,7 @@ export default async function TermsPage() {
   const name = site.name;
   const { operator, place } = LEGAL;
   const price = site.signup.monthlyAmount > 0 ? money(site.signup.monthlyAmount) : null;
+  const trial = price ? trialDays(site) : 0;
 
   const sections: LegalSection[] = [
     {
@@ -98,18 +99,36 @@ export default async function TermsPage() {
                 when you sign up, and includes every feature.
               </>,
               <>
-                After you register and confirm your email, you can look around the app, but you can only add or change anything once you have made the first payment. Your villa opens as soon as that
-                payment goes through.
+                After you register and confirm your email, you can look around the app, but you can only add or change anything once you have added your card (when a free trial is offered) or made
+                the first payment. Your villa opens as soon as that goes through.
               </>,
               <>
                 Payments are made by card and processed by our payment partner, Dodo Payments, which acts as the merchant of record and may appear on your card statement. Their terms also apply to the
                 payment itself. We never see or keep your full card number.
               </>,
-              <>Your subscription renews and your card is charged automatically every month, on the same day as your first payment, until you cancel.</>,
+              <>Your subscription renews and your card is charged automatically every month, on the same day as your first charge, until you cancel.</>,
               <>Any taxes that apply to the subscription are added at checkout where the law requires.</>,
               <>
                 We may change the price. We will tell you by email at least 30 days before a new price applies to you, and you can cancel before then if you don&apos;t want to continue.
               </>,
+            ]}
+          />
+          <h3>Free trial</h3>
+          <Points
+            items={[
+              <>
+                New villa accounts may be offered a free trial{trial > 0 ? <>, currently {trial} days</> : null}. The length offered is shown when you sign up, and the trial you were offered then is the
+                one you get, even if we change the offer later.
+              </>,
+              <>
+                To start the trial you add a card through Dodo Payments. Your bank may show a small or zero-amount check to confirm the card; you are not charged for the trial.
+              </>,
+              <>
+                When the trial ends, your card is charged the monthly price automatically, and then every month, unless you cancel before the trial ends. We email you a reminder about 3 days
+                before the first charge.
+              </>,
+              <>If you cancel during the trial, you are not charged. When access stops, your records are kept, so you can subscribe later and carry on.</>,
+              <>One free trial per villa and per owner. We may refuse or end a trial that is being used to get around this, for example by opening new accounts for the same villa.</>,
             ]}
           />
           <h3>If a payment fails</h3>
@@ -128,7 +147,7 @@ export default async function TermsPage() {
           <Points
             items={[
               <>You can cancel at any time from the Subscription page in the app, or by contacting us. There is no contract and no cancellation fee.</>,
-              <>When you cancel, you keep full use of {name} until the end of the month you have already paid for. You are not charged again.</>,
+              <>When you cancel, you keep full use of {name} until the end of the month you have already paid for, or until the end of your free trial. You are not charged again.</>,
               <>
                 Payments are for a month at a time and are not refunded for months already started or partly used, except where the law requires it.
               </>,
@@ -309,7 +328,8 @@ export default async function TermsPage() {
           <>
             <p className="font-semibold">The short version</p>
             <p className="mt-2">
-              {name} is a monthly subscription for each villa{price ? ` (${price} a month)` : ""}, paid by card and cancellable at any time. Your records belong to you, we keep them private and separate
+              {name} is a monthly subscription for each villa{price ? ` (${price} a month)` : ""}, paid by card and cancellable at any time
+              {trial > 0 ? `. New villas get ${trial} days free first, and you are only charged if you don't cancel before the trial ends` : ""}. Your records belong to you, we keep them private and separate
               from other villas, and you can download them whenever you like. Please use it lawfully and look after your guests&apos; and staff&apos;s information. The full terms below are what count.
             </p>
           </>

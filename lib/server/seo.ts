@@ -1,3 +1,5 @@
+import { ALL_DOCS } from "@/lib/docs";
+
 /*
  * Search engines and answer engines (Google, Bing, ChatGPT, Perplexity …):
  * the site's own address, and structured data (JSON-LD) describing it.
@@ -19,6 +21,8 @@ export const PUBLIC_PAGES = [
   { path: "/pricing", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/about", priority: 0.6, changeFrequency: "yearly" as const },
   { path: "/contact", priority: 0.6, changeFrequency: "yearly" as const },
+  { path: "/docs", priority: 0.7, changeFrequency: "monthly" as const },
+  ...ALL_DOCS.map((d) => ({ path: `/docs/${d.slug}`, priority: 0.5, changeFrequency: "monthly" as const })),
   { path: "/terms", priority: 0.3, changeFrequency: "yearly" as const },
   { path: "/privacy", priority: 0.3, changeFrequency: "yearly" as const },
 ];
@@ -102,7 +106,7 @@ export function faqPage(faq: { q: string; a: string }[]) {
   };
 }
 
-export function webPage(type: "WebPage" | "AboutPage" | "ContactPage" | "CollectionPage", path: string, name: string, description: string) {
+export function webPage(type: "WebPage" | "AboutPage" | "ContactPage" | "CollectionPage" | "TechArticle", path: string, name: string, description: string) {
   const url = siteUrl();
   return { "@type": type, "@id": `${url}${path}#webpage`, url: `${url}${path}`, name, description, isPartOf: { "@id": `${url}/#website` }, about: { "@id": `${url}/#software` }, inLanguage: "en" };
 }

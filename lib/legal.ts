@@ -10,5 +10,5 @@ export const LEGAL = {
   place: "Galle, Sri Lanka",
   operatorWebsite: "https://fullyups.com",
   /** Shown as "Last updated" on both pages */
-  updated: "7 November 2026",
+  updated: "11 November 2026",
 };

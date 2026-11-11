@@ -1,6 +1,6 @@
 import { appLink } from "@/lib/links";
 import { siteUrl } from "@/lib/server/seo";
-import { loadSite } from "@/lib/server/site";
+import { loadSite, trialDays } from "@/lib/server/site";
 import { money } from "@/lib/utils";
 
 /*
@@ -14,7 +14,8 @@ export async function GET() {
   // Off with search indexing, and while the site is "coming soon".
   if (!site.indexable) return new Response("Not found", { status: 404, headers: { "Content-Type": "text/plain; charset=utf-8" } });
   const url = siteUrl();
-  const price = site.signup.monthlyAmount > 0 ? `${money(site.signup.monthlyAmount)} a month per villa` : "one monthly price per villa";
+  const trial = site.signup.monthlyAmount > 0 ? trialDays(site) : 0;
+  const price = site.signup.monthlyAmount > 0 ? `${money(site.signup.monthlyAmount)} a month per villa${trial > 0 ? ` after a ${trial}-day free trial` : ""}` : "one monthly price per villa";
   const body = `# ${site.name}
 
 > ${site.name} is online booking and management software for small villas in Sri Lanka. Owners and caretakers use it on a phone or laptop to manage the booking calendar (entire villa or single rooms), guests, payments, receipts, expenses and reports. It costs ${price}, every feature included, paid by card, with no contract.

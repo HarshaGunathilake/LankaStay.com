@@ -18,6 +18,7 @@ export function SiteFooter({ platform, signupsOpen }: { platform: string; signup
             <span className="font-semibold text-white">Product</span>
             <Link href="/features" className={link}>Features</Link>
             <Link href="/pricing" className={link}>Pricing</Link>
+            <Link href="/docs" className={link}>Docs and guides</Link>
             {signupsOpen ? <Link href={appLink("/register")} className={link}>Register</Link> : null}
             <Link href={appLink("/login")} className={link}>Sign in</Link>
           </div>

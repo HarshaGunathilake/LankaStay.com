@@ -6,7 +6,7 @@ import { FaqList } from "@/components/site/faq";
 import { JsonLd } from "@/components/site/json-ld";
 import { SitePage } from "@/components/site/site-page";
 import { breadcrumbs, faqPage, pageMeta, softwareApp, webPage } from "@/lib/server/seo";
-import { loadSite } from "@/lib/server/site";
+import { loadSite, trialDays } from "@/lib/server/site";
 import { money } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -14,7 +14,8 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const site = await loadSite();
   const price = site.signup.monthlyAmount > 0 ? `${money(site.signup.monthlyAmount)} a month` : "One monthly price";
-  const description = `${price} per villa, every feature included: any number of rooms, unlimited bookings, receipts and reports. No setup fee, no contract.`;
+  const trial = site.signup.monthlyAmount > 0 ? trialDays(site) : 0;
+  const description = `${trial > 0 ? `${trial} days free, then ` : ""}${price} per villa, every feature included: any number of rooms, unlimited bookings, receipts and reports. No setup fee, no contract.`;
   return pageMeta({ siteName: site.name, index: site.indexable, title: `Pricing: ${price} per villa | ${site.name}`, description, path: "/pricing" });
 }
 
@@ -29,10 +30,12 @@ const INCLUDED = [
   "Phone, tablet and laptop",
 ];
 
-const STEPS = [
+const steps = (trial: number) => [
   { title: "Register", text: "Your villa's name, your name, email and a password." },
   { title: "Confirm your email", text: "Click the link we send, so the account is truly yours." },
-  { title: "Pay the first month", text: "By card. Your villa opens the moment it goes through." },
+  trial > 0
+    ? { title: "Add your card", text: `Your villa opens straight away and the first ${trial} days are free. Nothing is charged until the trial ends.` }
+    : { title: "Pay the first month", text: "By card. Your villa opens the moment it goes through." },
   { title: "Add your rooms and go", text: "A short guide shows you around on your first visit." },
 ];
 
@@ -49,6 +52,7 @@ export default async function PricingPage() {
   const primary = primaryAction(site);
   const priced = site.signup.monthlyAmount > 0;
   const price = priced ? money(site.signup.monthlyAmount) : null;
+  const trial = priced ? trialDays(site) : 0;
   const questions = [
     {
       q: `How much does ${site.name} cost?`,
@@ -56,7 +60,19 @@ export default async function PricingPage() {
         ? `${price} a month per villa. Every feature is included, with any number of rooms, bookings and guests, and there is no setup fee.`
         : "One monthly price per villa. Every feature is included, with any number of rooms, bookings and guests, and there is no setup fee.",
     },
-    ...FAQ,
+    ...(trial > 0
+      ? [
+          {
+            q: "Is there a free trial?",
+            a: `Yes. New villas get ${trial} days free with every feature. You add a card when you start, but nothing is charged until the trial ends. Cancel from the Subscription page before then and you pay nothing. We email you a reminder 3 days before the first charge.`,
+          },
+        ]
+      : []),
+    ...FAQ.map((f) =>
+      trial > 0 && f.q === "How do I pay?"
+        ? { ...f, a: "By card. You add it when you start your free trial, and it's charged automatically each month once the trial ends. Card details are handled by Dodo Payments and never stored by us." }
+        : f,
+    ),
   ];
 
   return (
@@ -73,7 +89,7 @@ export default async function PricingPage() {
         <p className={kicker}>Pricing</p>
         <h1 className={`${h1} mx-auto mt-4 max-w-[51rem]`}>One price. Every feature. No surprises.</h1>
         <p className={`${lead} mx-auto mt-6 max-w-[37.5rem]`}>
-          The same monthly price for every villa, however many rooms you have. No setup fee, no contract, cancel whenever you like.
+          {trial > 0 ? `Try everything free for ${trial} days. Then the` : "The"} same monthly price for every villa, however many rooms you have. No setup fee, no contract, cancel whenever you like.
         </p>
       </section>
 
@@ -81,14 +97,18 @@ export default async function PricingPage() {
         <article className="flex min-w-0 flex-[1_1_27.5rem] flex-col rounded-[1.75rem] bg-lp-ink p-7 text-white sm:p-11">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="font-display text-2xl font-semibold">{site.name}</h2>
-            <span className="rounded-full bg-lp-mint px-3 py-1 text-[0.8125rem] font-semibold text-lp-ink">Everything included</span>
+            <span className="rounded-full bg-lp-mint px-3 py-1 text-[0.8125rem] font-semibold text-lp-ink">{trial > 0 ? `${trial} days free` : "Everything included"}</span>
           </div>
           <div className="mt-7 flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
             <span className="font-display text-[3.25rem] leading-none font-bold tracking-[-0.04em] tabular-nums sm:text-[4rem]">{price ?? "Ask us"}</span>
             {price ? <span className="text-[1.0625rem] text-lp-night-muted">a month</span> : null}
           </div>
           <p className="mt-3 text-[0.9375rem] text-lp-night-muted">
-            {price ? "Per villa. Paid by card every month, through Dodo Payments." : "Get in touch and we'll tell you the current price."}
+            {price
+              ? trial > 0
+                ? `Per villa, after ${trial} days free. Paid by card every month, through Dodo Payments.`
+                : "Per villa. Paid by card every month, through Dodo Payments."
+              : "Get in touch and we'll tell you the current price."}
           </p>
           <PrimaryButton href={price ? primary.href : "/contact"} label={price ? primary.label : "Contact us"} tone="white" className="mt-8 w-full" />
           <ul className="mt-9 grid gap-x-6 gap-y-3.5 border-t border-lp-night-line pt-7 text-[0.9375rem] sm:grid-cols-2">
@@ -104,10 +124,10 @@ export default async function PricingPage() {
         <aside className="min-w-0 flex-[1_1_22.5rem] rounded-[1.75rem] border border-lp-line bg-white p-7 sm:p-11">
           <h2 className="font-display text-2xl font-semibold">How it starts</h2>
           <ol className="mt-7 flex flex-col gap-6">
-            {STEPS.map((s, i) => (
+            {steps(trial).map((s, i, all) => (
               <li key={s.title} className="flex gap-4">
                 <span
-                  className={`grid size-9 shrink-0 place-items-center rounded-full font-bold ${i === STEPS.length - 1 ? "bg-lp-accent text-white" : "bg-lp-accent-soft text-lp-accent"}`}
+                  className={`grid size-9 shrink-0 place-items-center rounded-full font-bold ${i === all.length - 1 ? "bg-lp-accent text-white" : "bg-lp-accent-soft text-lp-accent"}`}
                   aria-hidden="true"
                 >
                   {i + 1}
@@ -152,8 +172,14 @@ export default async function PricingPage() {
       </section>
 
       <CtaBand
-        title={price ? `${price} a month. That's it.` : "One price for every villa."}
-        text={site.signup.open ? `Register now, and take your next booking in ${site.name}.` : "Get in touch and we'll help you get started."}
+        title={trial > 0 ? `Try it free for ${trial} days.` : price ? `${price} a month. That's it.` : "One price for every villa."}
+        text={
+          site.signup.open
+            ? trial > 0
+              ? `Then ${price} a month. Register now, and take your next booking in ${site.name}.`
+              : `Register now, and take your next booking in ${site.name}.`
+            : "Get in touch and we'll help you get started."
+        }
         primary={primary}
         secondary={{ href: "/contact", label: "Talk to us" }}
       />

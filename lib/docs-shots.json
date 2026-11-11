@@ -1,0 +1,257 @@
+{
+"amenities": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"amenity-add": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"bill-add": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"bill-pay": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"bills": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"booking-sheet": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"booking-sheet-actions": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"bookings": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"calendar": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"checkin-button": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"checkout-1": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"checkout-2": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"checkout-3": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"confirmation": {
+"h": 1200,
+"kind": "doc",
+"w": 1240
+},
+"dashboard": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"expense-add": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"expenses": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"forgot-password": {
+"h": 1000,
+"kind": "full",
+"w": 1600
+},
+"guest-sheet": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"guests": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"invoice": {
+"h": 1200,
+"kind": "doc",
+"w": 1240
+},
+"login": {
+"h": 1000,
+"kind": "full",
+"w": 1600
+},
+"m-bookings": {
+"h": 1022,
+"kind": "phone",
+"w": 600
+},
+"m-calendar": {
+"h": 1022,
+"kind": "phone",
+"w": 600
+},
+"m-dashboard": {
+"h": 1022,
+"kind": "phone",
+"w": 600
+},
+"m-more": {
+"h": 1022,
+"kind": "phone",
+"w": 600
+},
+"money": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"nb-1-what": {
+"h": 1200,
+"kind": "form",
+"w": 1160
+},
+"nb-2-room": {
+"h": 1200,
+"kind": "form",
+"w": 1160
+},
+"nb-3-guest": {
+"h": 1200,
+"kind": "form",
+"w": 1160
+},
+"nb-3b-extras": {
+"h": 1200,
+"kind": "form",
+"w": 1160
+},
+"nb-3c-payment": {
+"h": 1200,
+"kind": "form",
+"w": 1160
+},
+"nb-4-confirmed": {
+"h": 1200,
+"kind": "form",
+"w": 1160
+},
+"payslip": {
+"h": 1200,
+"kind": "doc",
+"w": 1240
+},
+"payslip-make": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"record-payment": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"register": {
+"h": 1000,
+"kind": "full",
+"w": 1600
+},
+"reports": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"reports-export": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"reports-full": {
+"h": 3480,
+"kind": "page",
+"w": 1536
+},
+"room-add": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"rooms": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"settings": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"settings-report": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"staff": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"staff-add": {
+"h": 1200,
+"kind": "panel",
+"w": 721
+},
+"subscribe-popup": {
+"h": 1120,
+"kind": "form",
+"w": 800
+},
+"subscription": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"subscription-trial-offer": {
+"h": 1200,
+"kind": "page",
+"w": 1536
+},
+"tour-welcome": {
+"h": 1000,
+"kind": "full",
+"w": 1600
+},
+"verify-email": {
+"h": 1000,
+"kind": "full",
+"w": 1600
+}
+}

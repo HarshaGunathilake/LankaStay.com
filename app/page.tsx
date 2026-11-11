@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { organization, pageMeta, SITE_DESCRIPTION, softwareApp, webPage, website } from "@/lib/server/seo";
 import { BillPicture, CalendarPicture, GuestPicture, MoneyPicture } from "@/components/landing/previews";
 import { PhoneFrame, SHOTS } from "@/components/site/frames";
-import { loadSite } from "@/lib/server/site";
+import { loadSite, trialDays } from "@/lib/server/site";
 import { appLink } from "@/lib/links";
 import { money } from "@/lib/utils";
 
@@ -71,6 +71,7 @@ export default async function LandingPage() {
   if (p.comingSoon && !p.adminPreview) return <ComingSoon site={p} />;
   const signedIn = p.signedIn;
   const priced = p.signup.monthlyAmount > 0;
+  const trial = priced ? trialDays(p) : 0;
   const whatsapp = p.phone ? `https://wa.me/${p.phone.replace(/[^\d]/g, "")}` : null;
 
   const primary = signedIn
@@ -123,7 +124,12 @@ export default async function LandingPage() {
                 </Link>
               </div>
               <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-[0.9375rem] text-lp-night-muted">
-                {[priced ? `${money(p.signup.monthlyAmount)} a month` : "One monthly price", "Every feature included", "Cancel any time"].map((t) => (
+                {[
+                  ...(trial > 0 ? [`${trial} days free`] : []),
+                  priced ? `${trial > 0 ? "Then " : ""}${money(p.signup.monthlyAmount)} a month` : "One monthly price",
+                  "Every feature included",
+                  "Cancel any time",
+                ].map((t) => (
                   <li key={t} className="flex items-center gap-2">
                     <span className="text-lp-mint">
                       <Check />
@@ -240,7 +246,9 @@ export default async function LandingPage() {
               <p className="text-[0.9375rem] font-semibold text-[#bfe3d8]">Pricing</p>
               <h2 className={`${h2} mt-3`}>One plan. Everything in it.</h2>
               <p className="mt-4 max-w-[26.25rem] text-[1.0625rem] leading-relaxed text-[#d9eee8]">
-                No setup fee, no contract and no per-room charges. Pay monthly by card and stop whenever you like.
+                {trial > 0
+                  ? `Try everything free for ${trial} days. No setup fee, no contract and no per-room charges. After the trial, pay monthly by card and stop whenever you like.`
+                  : "No setup fee, no contract and no per-room charges. Pay monthly by card and stop whenever you like."}
               </p>
             </div>
             <div className="min-w-0 flex-[1_1_23.75rem] rounded-[1.25rem] bg-white p-7 text-lp-ink sm:p-9">
@@ -262,7 +270,9 @@ export default async function LandingPage() {
               >
                 {primary.label} <Arrow />
               </Link>
-              <p className="mt-3 text-center text-[0.8125rem] text-lp-muted">Card payments are handled by Dodo Payments.</p>
+              <p className="mt-3 text-center text-[0.8125rem] text-lp-muted">
+                {trial > 0 ? `First ${trial} days free. Add a card to start, nothing is charged until the trial ends. ` : ""}Card payments are handled by Dodo Payments.
+              </p>
             </div>
           </div>
         </section>
