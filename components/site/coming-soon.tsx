@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandMark, ISLAND_SIMPLE, Wordmark } from "@/components/brand";
 import { appLink } from "@/lib/links";
+import { CookieSettingsLink } from "@/components/site/analytics";
 import type { Site } from "@/lib/server/site";
 import { whatsappLink } from "@/lib/server/site";
 import { PhoneFrame, SHOTS } from "./frames";
@@ -71,6 +72,7 @@ export function ComingSoon({ site }: { site: Site }) {
           <span className="flex flex-wrap gap-x-5 gap-y-1">
             <Link href="/terms" className="hover:text-lp-ink">Terms of Service</Link>
             <Link href="/privacy" className="hover:text-lp-ink">Privacy Policy</Link>
+            <CookieSettingsLink className="hover:text-lp-ink" />
             <span>Made in Sri Lanka</span>
           </span>
         </div>

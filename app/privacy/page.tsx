@@ -104,7 +104,7 @@ export default async function PrivacyPage() {
             ]}
           />
           <p>
-            We do not use analytics, advertising or tracking tools on this website or in the app, and we do not buy information about you from anyone.
+            On this website (not in the app), if you press Accept on the cookie banner, we use Google Analytics (loaded through Google Tag Manager) to count visits and see which pages are read. It records things like the pages you open, roughly where you are, your device and browser, and how you arrived. We don&apos;t use advertising tools, the app itself has no analytics, and we do not buy information about you from anyone.
           </p>
         </>
       ),
@@ -150,7 +150,8 @@ export default async function PrivacyPage() {
             items={[
               <>our hosting and database providers, who store the app and its data;</>,
               <>our email provider, who delivers the emails the app sends;</>,
-              <>Dodo Payments, who processes subscription payments.</>,
+              <>Dodo Payments, who processes subscription payments;</>,
+              <>Google, whose Google Analytics counts visits to this website (not the app).</>,
             ]}
           />
           <p>They may use the information only to provide their service to us, and must keep it secure and confidential.</p>
@@ -246,7 +247,9 @@ export default async function PrivacyPage() {
       title: "Cookies",
       body: (
         <>
-          <p>We use only the cookies needed for {name} to work. We don&apos;t use advertising or tracking cookies, so there is nothing to opt out of.</p>
+          <p>
+            The app uses only the cookies it needs to work. This website asks before it uses Google Analytics cookies to count visits: nothing from Google loads unless you press Accept on the cookie banner. We don&apos;t use advertising cookies. You can change your choice at any time with <strong>Cookie settings</strong> at the bottom of each page, and the website works the same either way.
+          </p>
           <Points
             items={[
               <>
@@ -257,6 +260,9 @@ export default async function PrivacyPage() {
               </>,
               <>
                 <strong>Preview cookie</strong> (this website): only set if our team opens a private preview link, so they can check the site before it launches.
+              </>,
+              <>
+                <strong>Google Analytics cookies</strong> (this website): <code>_ga</code> and <code>_ga_…</code>, which tell visits apart so they can be counted. Set only if you accept, and they last up to 2 years. Your choice itself is remembered in your browser, not in a cookie.
               </>,
             ]}
           />
@@ -315,7 +321,7 @@ export default async function PrivacyPage() {
             <p className="font-semibold">The short version</p>
             <p className="mt-2">
               We collect what we need to run {name}: your account details, the records you keep for your villa, and your payments through our payment partner. We use it only to provide and support the
-              service. We don&apos;t sell it, we don&apos;t use tracking or advertising cookies, and each villa&apos;s records are kept separate. You can ask to see, correct or delete your information at
+              service. We don&apos;t sell it, we don&apos;t use advertising cookies, the website uses Google Analytics only to count visits and only if you agree, and each villa&apos;s records are kept separate. You can ask to see, correct or delete your information at
               any time.
             </p>
           </>

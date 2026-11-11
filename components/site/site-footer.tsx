@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/brand";
 import { appLink } from "@/lib/links";
+import { CookieSettingsLink } from "@/components/site/analytics";
 
 
 /** The website's footer: the pages, sign-in, and the Terms and Privacy pages. */
@@ -28,6 +29,7 @@ export function SiteFooter({ platform, signupsOpen }: { platform: string; signup
             <Link href="/contact" className={link}>Contact us</Link>
             <Link href="/terms" className={link}>Terms of Service</Link>
             <Link href="/privacy" className={link}>Privacy Policy</Link>
+            <CookieSettingsLink className={link} />
           </div>
         </nav>
       </div>
