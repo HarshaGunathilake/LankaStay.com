@@ -22,7 +22,7 @@ export function Expenses() {
               ["What was it for", "For example, Pool cleaning."],
               ["Date", "When you paid. Today unless you change it."],
               ["Note", "Anything worth remembering. Optional."],
-              ["Receipt", "Optional: choose the photo or PDF of the receipt to note its file name with the expense."],
+              ["Receipt", "Optional: press Attach a receipt photo or PDF and choose the file (up to 10 MB). It uploads straight away and is kept privately with the expense."],
             ]}
           />
           <Shot src="expense-add" alt="The Add expense form with amount, category, what it was for, date and note" />
@@ -33,6 +33,11 @@ export function Expenses() {
           </p>
         </Step>
       </Steps>
+
+      <H2>See a receipt again</H2>
+      <p>
+        Expenses with a receipt show its file name under them. Tap it to open the receipt. Only you can open it: the link is made when you tap it and stops working after a few minutes.
+      </p>
 
       <H2>Expenses added for you</H2>
       <ul>
@@ -47,7 +52,7 @@ export function Expenses() {
 
       <H2>Delete an expense</H2>
       <p>
-        Press the bin next to it, then <UI>Delete</UI>. To remove a bill payment, undo it on the Bills page instead, so the bill shows as unpaid again.
+        Press the bin next to it, then <UI>Delete</UI>. Its receipt is deleted too. To remove a bill payment, undo it on the Bills page instead, so the bill shows as unpaid again.
       </p>
     </>
   );
@@ -94,7 +99,11 @@ export function Bills() {
       <H2>Pay a bill</H2>
       <Steps>
         <Step title={<>Press <UI>Pay</UI> next to the bill</>} />
-        <Step title="Check the amount and the date you paid" />
+        <Step title="Check the amount and the date you paid">
+          <p>
+            To keep the bill with the payment, press <UI>Attach the bill or receipt</UI> and choose a photo or PDF. You can open it later from Expenses.
+          </p>
+        </Step>
         <Step title={<>Press <UI>Mark paid</UI></>}>
           <p>
             You&apos;ll see <em>… paid and added to expenses</em>. The bill moves to <strong>Paid lately</strong>, and the next one is scheduled.
